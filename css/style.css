@@ -1295,6 +1295,54 @@ pre .javascript .function {
 .post-toc-wrap .post-toc .nav .active-current > a .nav-text {
   color: var(--primary-color);
 }
+.twikoo-container #twikoo .tk-meta-input .el-input .el-input-group__prepend {
+  color: var(--default-text-color);
+}
+.twikoo-container #twikoo .tk-meta-input .el-input input {
+  color: var(--default-text-color);
+}
+.twikoo-container #twikoo .tk-input textarea {
+  color: var(--default-text-color);
+}
+.twikoo-container #twikoo .actions .tk-row-actions-start .tk-action-icon svg {
+  fill: var(--default-text-color);
+}
+.twikoo-container #twikoo .actions .tk-row-actions-start .tk-action-icon.OwO .OwO-body {
+  color: var(--default-text-color);
+  background-color: var(--background-color);
+}
+.twikoo-container #twikoo .actions .tk-preview span {
+  background: var(--second-background-color);
+  color: var(--default-text-color);
+}
+.twikoo-container #twikoo .tk-preview-container {
+  color: var(--default-text-color);
+}
+.twikoo-container #twikoo .tk-comments-container .tk-comments-count span {
+  color: var(--default-text-color);
+}
+.twikoo-container #twikoo .tk-main {
+  margin-bottom: 20px;
+}
+.twikoo-container #twikoo .tk-main .tk-meta .tk-nick {
+  color: var(--default-text-color);
+}
+.twikoo-container #twikoo .tk-main .tk-meta .tk-tag.tk-tag-green {
+  background: -webkit-linear-gradient(45deg, #e3565e, #ee854b, #f6c258, #90c68a, #5fb3b3, #69c, #c594c5);
+  background: linear-gradient(45deg, #e3565e, #ee854b, #f6c258, #90c68a, #5fb3b3, #69c, #c594c5);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+.twikoo-container #twikoo .tk-main .tk-meta .tk-time time {
+  color: var(--default-text-color);
+}
+.twikoo-container #twikoo .tk-main .tk-content {
+  color: var(--default-text-color);
+}
+.twikoo-container #twikoo .tk-main .tk-expand {
+  color: var(--third-text-color);
+}
 .comments-container {
   display: inline-block;
   margin-top: 30px;
@@ -1325,6 +1373,47 @@ pre .javascript .function {
   left: 0;
   width: 100%;
   z-index: 1009;
+}
+.progress-bar-container .pjax-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--pjax-progress-bar-color);
+  visibility: hidden;
+  opacity: 0;
+  z-index: 1008;
+  transition-property: color, background, box-shadow, border-color, width;
+  transition-delay: 0s, 0s, 0s, 0s, 0s;
+  transition-duration: 0.2s, 0.2s, 0.2s, 0.2s, 0.1s;
+  transition-timing-function: ease, ease, ease, ease, linear;
+}
+.progress-bar-container .pjax-progress-bar.show {
+  opacity: 1;
+  visibility: visible;
+}
+.progress-bar-container .pjax-progress-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1008;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 6px 0 0;
+  visibility: hidden;
+  font-size: 1.1rem;
+  color: var(--default-text-color);
+}
+@media (max-width: 780px) {
+  .progress-bar-container .pjax-progress-icon {
+    padding: 6px 5px 0 0;
+    font-size: 1rem;
+  }
+}
+.progress-bar-container .pjax-progress-icon.show {
+  visibility: visible;
 }
 .header-wrapper {
   width: 100%;
