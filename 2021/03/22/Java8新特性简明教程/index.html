@@ -209,19 +209,25 @@
 
         <div class="article-content markdown-body">
             <h2 id="允许在接口中有默认方法实现"><a href="#允许在接口中有默认方法实现" class="headerlink" title="允许在接口中有默认方法实现"></a>允许在接口中有默认方法实现</h2><p>Java 8 允许我们使用default关键字，为接口声明添加非抽象的方法实现。这个特性又被称为扩展方法。下面是我们的第一个例子：<br>  <span id="more"></span></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Formula</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> a)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Math.sqrt(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Formula</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> a)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Math.sqrt(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>在接口Example中，除了抽象方法caculate以外，还定义了一个默认方法sqrt。Formula的实现类只需要实现抽象方法caculate就可以了。默认方法sqrt可以直接使用。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Formula formula = <span class="keyword">new</span> formula () &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> sqrt(a * <span class="number">100</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">formula.calculate(<span class="number">100</span>);     <span class="comment">// 100.0</span></span><br><span class="line">formula.sqrt(<span class="number">16</span>);           <span class="comment">// 4.0</span></span><br></pre></td></tr></table></figure>
+
 <p>formula 对象以匿名对象的形式实现了Formula 接口。代码很啰嗦：用了6行代码才实现了一个简单的计算功能：a*100开平方根。我们在下一节会看到，Java 8 还有一种更加优美的方法，能够实现包含单个函数的对象。</p>
 <h2 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h2><p>让我们从最简单的例子开始，来学习如何对一个string列表进行排序。我们首先使用Java 8之前的方法来实现：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; names = Arrays.asList(<span class="string">&quot;peter&quot;</span>, <span class="string">&quot;anna&quot;</span>, <span class="string">&quot;mike&quot;</span>, <span class="string">&quot;xenia&quot;</span>);</span><br><span class="line"></span><br><span class="line">Collections.sort(names, <span class="keyword">new</span> Comparator&lt;String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String a, String b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> b.compareTo(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
 <p>静态工具方法Collections.sort接受一个list，和一个Comparator接口作为输入参数，Comparator的实现类可以对输入的list中的元素进行比较。通常情况下，你可以直接用创建匿名Comparator对象，并把它作为参数传递给sort方法。</p>
 <p>除了创建匿名对象以外，Java 8 还提供了一种更简洁的方式，Lambda表达式。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(names, (String a, String b) -&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> b.compareTo(a);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
 <p>你可以看到，这段代码就比之前的更加简短和易读。但是，它还可以更加简短：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(names, (String a, String b) -&gt; b.compareTo(a));</span><br></pre></td></tr></table></figure>
+
 <p>只要一行代码，包含了方法体。你甚至可以连大括号对{}和return关键字都省略不要。不过这还不是最短的写法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(names, (a, b) -&gt; b.compareTo(a));</span><br></pre></td></tr></table></figure>
+
 <p>Java编译器能够自动识别参数的类型，所以你就可以省略掉类型不写。让我们再深入地研究一下lambda表达式的威力吧。</p>
 <h2 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h2><p>Lambda表达式如何匹配Java的类型系统？每一个lambda都能够通过一个特定的接口，与一个给定的类型进行匹配。一个所谓的函数式接口必须要有且仅有一个抽象方法声明。每个与之对应的lambda表达式必须要与抽象方法的声明相匹配。由于默认方法不是抽象的，因此你可以在你的函数式接口里任意添加默认方法。</p>
 <p>任意只包含一个抽象方法的接口，我们都可以用来做成lambda表达式。为了让你定义的接口满足要求，你应当在接口前加上@FunctionalInterface 标注。编译器会注意到这个标注，如果你的接口中定义了第二个抽象方法的话，编译器会抛出异常。</p>
@@ -360,6 +366,26 @@
             </div>
         
 
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%93%AA%E4%BA%9B%E8%AE%BE%E8%AE%A1%E7%9C%8B%E4%BC%BC%E6%98%AF%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%AE%9E%E5%88%99%E6%98%AF%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B%E7%9A%84/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">设计模式之哪些设计看似是面向对象实则是面向过程的</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+            </div>
         
 
         
