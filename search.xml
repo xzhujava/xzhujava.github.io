@@ -1,6 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>设计模式之几种设计原则</title>
+    <url>/2021/03/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%87%A0%E7%A7%8D%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</url>
+    <content><![CDATA[<blockquote>
+<p>关于设计模式的几大设计原则的资料网上很多，但是很多地方解释地都太过于笼统化，最近也是在极客时间上学习王争老师的设计模式之美，其中对于设计原则的讲解也比较通俗易懂，因此对几大设计原则做如下总结。</p>
+</blockquote>
+<h5 id="1-SOLID原则之单一职责原则-SRP"><a href="#1-SOLID原则之单一职责原则-SRP" class="headerlink" title="1.SOLID原则之单一职责原则(SRP)"></a>1.SOLID原则之单一职责原则(SRP)</h5><p>单一职责原则的英文是 Single Responsibility Principle，缩写为 SRP。这个原则的英文描述是这样的：A class or module should have a single responsibility。如果我们把它翻译成中文，那就是：一个类或者模块只负责完成一个职责（或者功能。<br>注意，这个原则描述的对象包含两个，一个是类（class），一个是模块（module）。关于这两个概念，有两种理解方式。一种理解是：把模块看作比类更加抽象的概念，类也可以看作模块。另一种理解是：把模块看作比类更加粗粒度的代码块，模块中包含多个类，多个类组成一个模块。<br>单一职责原则的定义描述非常简单，也不难理解。一个类只负责完成一个职责或者功能。也就是说，不要设计大而全的类，要设计粒度小、功能单一的类。换个角度来讲就是，一个类包含了两个或者两个以上业务不相干的功能，那我们就说它职责不够单一，应该将它拆分成多个功能更加单一、粒度更细的类。</p>
+<h5 id="2-SOLID原则之开闭原则-OCP"><a href="#2-SOLID原则之开闭原则-OCP" class="headerlink" title="2.SOLID原则之开闭原则(OCP)"></a>2.SOLID原则之开闭原则(OCP)</h5><p>开闭原则的英文全称是 Open Closed Principle，简写为 OCP。它的英文描述是：software entities (modules, classes, functions, etc.) should be open for extension , but closed for modification。我们把它翻译成中文就是：软件实体（模块、类、方法等）应该“对扩展开放、对修改关闭”。<br>这个描述比较简略，如果我们详细表述一下，那就是，添加一个新的功能应该是，在已有代码基础上扩展代码（新增模块、类、方法等），而非修改已有代码（修改模块、类、方法等）。</p>
+<h5 id="3-SOLID原则之里式替换原则-LSP"><a href="#3-SOLID原则之里式替换原则-LSP" class="headerlink" title="3.SOLID原则之里式替换原则(LSP)"></a>3.SOLID原则之里式替换原则(LSP)</h5><p>里式替换原则的英文翻译是：Liskov Substitution Principle，缩写为 LSP。这个原则最早是在 1986 年由 Barbara Liskov 提出，他是这么描述这条原则的：</p>
+<blockquote>
+<p>If S is a subtype of T, then objects of type T may be replaced with objects of type S, without breaking the program。</p>
+</blockquote>
+<p>在 1996 年，Robert Martin 在他的 SOLID 原则中，重新描述了这个原则，英文原话是这样的：</p>
+<blockquote>
+<p>Functions that use pointers of references to base classes must be able to use objects of derived classes without knowing it。</p>
+</blockquote>
+<p>我们综合两者的描述，将这条原则用中文描述出来，是这样的：子类对象（object of subtype/derived class）能够替换程序（program）中父类对象（object of base/parent class）出现的任何地方，并且保证原来程序的逻辑行为（behavior）不变及正确性不被破坏。</p>
+<p>这么说其实还是有一点抽象，我们可以把里式替换原则理解为是用来指导，继承关系中子类该如何设计的一个原则。理解里式替换原则，最核心的就是理解“design by contract，按照协议来设计”这几个字。父类定义了函数的“约定”（或者叫协议），那子类可以改变函数的内部实现逻辑，但不能改变函数原有的“约定”。这里的约定包括：函数声明要实现的功能；对输入、输出、异常的约定；甚至包括注释中所罗列的任何特殊说明。<br>理解这个原则，我们还要弄明白里式替换原则跟多态的区别。虽然从定义描述和代码实现上来看，多态和里式替换有点类似，但它们关注的角度是不一样的。多态是面向对象编程的一大特性，也是面向对象编程语言的一种语法。它是一种代码实现的思路。而里式替换是一种设计原则，用来指导继承关系中子类该如何设计，子类的设计要保证在替换父类的时候，不改变原有程序的逻辑及不破坏原有程序的正确性。</p>
+<h5 id="4-SOLID原则之接口隔离原则-ISP"><a href="#4-SOLID原则之接口隔离原则-ISP" class="headerlink" title="4.SOLID原则之接口隔离原则(ISP)"></a>4.SOLID原则之接口隔离原则(ISP)</h5><p>接口隔离原则的英文翻译是“ Interface Segregation Principle”，缩写为 ISP。Robert Martin 在 SOLID 原则中是这样定义它的：“Clients should not be forced to depend upon interfaces that they do not use。”直译成中文的话就是：客户端不应该被强迫依赖它不需要的接口。其中的“客户端”，可以理解为接口的调用者或者使用者。<br>实际上，“接口”这个名词可以用在很多场合中。生活中我们可以用它来指插座接口等。在软件开发中，我们既可以把它看作一组抽象的约定，也可以具体指系统与系统之间的 API 接口，还可以特指面向对象编程语言中的接口等。<br>理解接口隔离原则的关键，就是理解其中的“接口”二字。在这条原则中，我们可以把“接口”理解为下面三种东西：</p>
+<ul>
+<li>一组 API 接口集合</li>
+<li>单个 API 接口或函数</li>
+<li>OOP 中的接口概念</li>
+</ul>
+<h5 id="5-SOLID原则之依赖反转原则-DIP"><a href="#5-SOLID原则之依赖反转原则-DIP" class="headerlink" title="5.SOLID原则之依赖反转原则(DIP)"></a>5.SOLID原则之依赖反转原则(DIP)</h5><p>依赖反转原则的英文翻译是 Dependency Inversion Principle，缩写为 DIP。中文翻译有时候也叫依赖倒置原则。<br>这条原则的原文描述是这样说的：</p>
+<blockquote>
+<p>High-level modules shouldn’t depend on low-level modules. Both modules should depend on abstractions. In addition, abstractions shouldn’t depend on details. Details depend on abstractions.</p>
+</blockquote>
+<p>我们将它翻译成中文，大概意思就是：高层模块（high-level modules）不要依赖低层模块（low-level）。高层模块和低层模块应该通过抽象（abstractions）来互相依赖。除此之外，抽象（abstractions）不要依赖具体实现细节（details），具体实现细节（details）依赖抽象（abstractions）。<br>所谓高层模块和低层模块的划分，简单来说就是，在调用链上，调用者属于高层，被调用者属于低层。这条原则跟控制反转(IOC)有点类似，主要用来指导框架层面的设计。高层模块不依赖低层模块，它们共同依赖同一个抽象。抽象不要依赖具体实现细节，具体实现细节依赖抽象。</p>
+<h5 id="6-KISS-原则"><a href="#6-KISS-原则" class="headerlink" title="6.KISS 原则"></a>6.KISS 原则</h5><p>KISS 原则的英文描述有好几个版本，比如下面这几个。</p>
+<ul>
+<li>Keep It Simple and Stupid.</li>
+<li>Keep It Short and Simple.</li>
+<li>Keep It Simple and Straightforward.</li>
+</ul>
+<p>仔细看你就会发现，它们要表达的意思其实差不多，翻译成中文就是：尽量保持简单。我们知道，代码的可读性和可维护性是衡量代码质量非常重要的两个标准。而 KISS 原则就是保持代码可读和可维护的重要手段。代码足够简单，也就意味着很容易读懂，bug 比较难隐藏。即便出现 bug，修复起来也比较简单。这条原则实际是在告诉我们，要保持代码“Simple and Stupid”。</p>
+<h5 id="7-YAGNI-原则"><a href="#7-YAGNI-原则" class="headerlink" title="7.YAGNI 原则"></a>7.YAGNI 原则</h5><p>YAGNI 原则的英文全称是：You Ain’t Gonna Need It。直译就是：你不会需要它。这条原则算是万金油了。当用在软件开发中的时候，它的意思是：不要去设计当前用不到的功能；不要去编写当前用不到的代码。实际上，这条原则的核心思想就是：不要做过度设计。<br>比如，我们的系统暂时只用 Redis 存储配置信息，以后可能会用到 ZooKeeper。根据 YAGNI 原则，在未用到 ZooKeeper 之前，我们没必要提前编写这部分代码。当然，这并不是说我们就不需要考虑代码的扩展性。我们还是要预留好扩展点，等到需要的时候，再去实现 ZooKeeper 存储配置信息这部分代码。<br>再比如，我们不要在项目中提前引入不需要依赖的开发包。对于 Java 程序员来说，我们经常使用 Maven 或者 Gradle 来管理依赖的类库（library）。有些同事为了避免开发中 library 包缺失而频繁地修改 Maven 或者 Gradle 配置文件，提前往项目里引入大量常用的 library 包。实际上，这样的做法也是违背 YAGNI 原则的。<br>YAGNI 原则跟 和上面所说的KISS 原则并非一回事儿。KISS 原则讲的是“如何做”的问题（尽量保持简单），而 YAGNI 原则说的是“要不要做”的问题（当前不需要的就不要做）。</p>
+<h5 id="8-DRY-原则"><a href="#8-DRY-原则" class="headerlink" title="8.DRY 原则"></a>8.DRY 原则</h5><p>它的英文描述为：Don’t Repeat Yourself。中文直译为：不要重复自己。将它应用在编程中，可以理解为：不要写重复的代码。<br>开发中，我们一般会见到如下代码重复的场景：</p>
+<ul>
+<li>实现逻辑重复</li>
+<li>功能语义重复</li>
+<li>代码执行重复</li>
+</ul>
+<p>其实实现逻辑重复，但功能语义不重复的代码，并不违反 DRY 原则。实现逻辑不重复，但功能语义重复的代码，也算是违反 DRY 原则。除此之外，代码执行重复也算是违反 DRY 原则。</p>
+<h5 id="9-迪米特法则-LOD"><a href="#9-迪米特法则-LOD" class="headerlink" title="9.迪米特法则(LOD)"></a>9.迪米特法则(LOD)</h5><p>迪米特法则的英文翻译是：Law of Demeter，缩写是 LOD。单从这个名字上来看，我们完全猜不出这个原则讲的是什么。不过，它还有另外一个更加达意的名字，叫作最小知识原则，英文翻译为：The Least Knowledge Principle。<br>关于这个设计原则，我们先来看一下它最原汁原味的英文定义：</p>
+<blockquote>
+<p>Each unit should have only limited knowledge about other units: only units “closely” related to the current unit. Or: Each unit should only talk to its friends; Don’t talk to strangers.</p>
+</blockquote>
+<p>我们把它直译成中文，就是下面这个样子：</p>
+<blockquote>
+<p>每个模块（unit）只应该了解那些与它关系密切的模块（units: only units “closely” related to the current unit）的有限知识（knowledge）。或者说，每个模块只和自己的朋友“说话”（talk），不和陌生人“说话”（talk）。</p>
+</blockquote>
+<p>大部分设计原则和思想都非常抽象，有各种各样的解读，要想灵活地应用到实际的开发中，需要有实战经验的积累。迪米特法则也不例外。所以，我结合我自己的理解和经验，对刚刚的定义重新描述一下。</p>
+<blockquote>
+<p>不该有直接依赖关系的类之间，不要有依赖；有依赖关系的类之间，尽量只依赖必要的接口（也就是定义中的“有限知识”）。</p>
+</blockquote>
+<p>迪米特法则是希望减少类之间的耦合，让类越独立越好。每个类都应该少了解系统的其他部分。一旦发生变化，需要了解这一变化的类就会比较少。</p>
+]]></content>
+      <tags>
+        <tag>设计模式、设计原则</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设计模式之哪些设计看似是面向对象实则是面向过程的</title>
+    <url>/2021/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%93%AA%E4%BA%9B%E8%AE%BE%E8%AE%A1%E7%9C%8B%E4%BC%BC%E6%98%AF%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%AE%9E%E5%88%99%E6%98%AF%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B%E7%9A%84/</url>
+    <content><![CDATA[<blockquote>
+<p>现如今，大部分编程语言都是面向对象编程语言，大部分软件都是基于面向对象编程这种编程范式来开发的。不过，在实际的开发工作中，我们常常对面向对象编程都有误解，总以为把所有代码都塞到类里，自然就是在进行面向对象编程了。实际上，这样的认识是不正确的。有时候，从表面上看似是面向对象编程风格的代码，从本质上看却是面向过程编程风格的。今天，我结合具体的代码实例来讲一讲，有哪些看似是面向对象，实际上是面向过程编程风格的代码。</p>
+</blockquote>
+<ul>
+<li><h6 id="1-滥用getter、setter-方法"><a href="#1-滥用getter、setter-方法" class="headerlink" title="1.滥用getter、setter 方法"></a>1.滥用getter、setter 方法</h6></li>
+</ul>
+<p>在开发中设计一个类时我们通常把getter、setter方法都一并定义，或许有时更加省事直接使用IDE或Lombok插件自动生成所有属性的getter、setter方法。这种做法是非常不推荐的。它违反了面向对象编程的封装特性，相当于将面向对象编程风格退化成了面向过程编程风格。比如下面一个例子：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShoppingCart</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> itemsCount;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">double</span> totalPrice;</span><br><span class="line">  <span class="keyword">private</span> List&lt;ShoppingCartItem&gt; items = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemsCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.itemsCount;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setItemsCount</span><span class="params">(<span class="keyword">int</span> itemsCount)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.itemsCount = itemsCount;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getTotalPrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.totalPrice;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTotalPrice</span><span class="params">(<span class="keyword">double</span> totalPrice)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.totalPrice = totalPrice;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> List&lt;ShoppingCartItem&gt; <span class="title">getItems</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.items;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addItem</span><span class="params">(ShoppingCartItem item)</span> </span>&#123;</span><br><span class="line">    items.add(item);</span><br><span class="line">    itemsCount++;</span><br><span class="line">    totalPrice += item.getPrice();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...省略其他方法...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这段代码中，ShoppingCart 是一个简化后的购物车类，有三个私有（private）属性：itemsCount、totalPrice、items。对于 itemsCount、totalPrice 两个属性，我们定义了它们的 getter、setter 方法。对于 items 属性，我们定义了它的 getter 方法和 addItem() 方法。<br>我们先来看前两个属性，itemsCount 和 totalPrice。虽然我们将它们定义成 private 私有属性，但是提供了 public 的 getter、setter 方法，这就跟将这两个属性定义为 public 公有属性，没有什么两样了。外部可以通过 setter 方法随意地修改这两个属性的值。除此之外，任何代码都可以随意调用 setter 方法，来重新设置 itemsCount、totalPrice 属性的值，这也会导致其跟 items 属性的值不一致。<br>而面向对象封装的定义是：通过访问权限控制，隐藏内部数据，外部仅能通过类提供的有限的接口访问、修改内部数据。所以，暴露不应该暴露的 setter 方法，明显违反了面向对象的封装特性。数据没有访问权限控制，任何代码都可以随意修改它，代码就退化成了面向过程编程风格的了。<br>看完了前两个属性，我们再来看 items 这个属性。对于 items 这个属性，我们定义了它的 getter 方法和 addItem() 方法，并没有定义它的 setter 方法。这样的设计貌似看起来没有什么问题，但实际上并不是。<br>对于 itemsCount 和 totalPrice 这两个属性来说，定义一个 public 的 getter 方法，确实无伤大雅，毕竟 getter 方法不会修改数据。但是，对于 items 属性就不一样了，这是因为 items 属性的 getter 方法，返回的是一个 List集合容器。外部调用者在拿到这个容器之后，是可以操作容器内部数据的，也就是说，外部代码还是能修改 items 中的数据。比如像下面这样：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ShoppingCart cart = <span class="keyword">new</span> ShoppCart();</span><br><span class="line">...</span><br><span class="line">cart.getItems().clear(); <span class="comment">// 清空购物车</span></span><br></pre></td></tr></table></figure>
+
+<p>你可能会说，清空购物车这样的功能需求看起来合情合理啊，上面的代码没有什么不妥啊。你说得没错，需求是合理的，但是这样的代码写法，会导致 itemsCount、totalPrice、items 三者数据不一致。我们不应该将清空购物车的业务逻辑暴露给上层代码。正确的做法应该是，在 ShoppingCart 类中定义一个 clear() 方法，将清空购物车的业务逻辑封装在里面，透明地给调用者使用。ShoppingCart 类的 clear() 方法的具体代码实现如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShoppingCart</span> </span>&#123;</span><br><span class="line">  <span class="comment">// ...省略其他代码...</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    items.clear();</span><br><span class="line">    itemsCount = <span class="number">0</span>;</span><br><span class="line">    totalPrice = <span class="number">0.0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以，在设计实现类的时候，除非真的需要，否则，尽量不要给属性定义 setter 方法。除此之外，尽管 getter 方法相对 setter 方法要安全些，但是如果返回的是集合容器（比如例子中的 List 容器），也要防范集合内部数据被修改的危险。</p>
+<ul>
+<li><h6 id="2-滥用全局变量和方法"><a href="#2-滥用全局变量和方法" class="headerlink" title="2.滥用全局变量和方法"></a>2.滥用全局变量和方法</h6></li>
+</ul>
+<p>在面向对象编程中，常见的全局变量有单例类对象、静态成员变量、常量等，常见的全局方法有静态方法。单例类对象在全局代码中只有一份，所以，它相当于一个全局变量。静态成员变量归属于类上的数据，被所有的实例化对象所共享，也相当于一定程度上的全局变量。而常量是一种非常常见的全局变量，比如一些代码中的配置参数，一般都设置为常量，放到一个 Constants 类中。静态方法一般用来操作静态变量或者外部数据。你可以联想一下我们常用的各种 Utils 类，里面的方法一般都会定义成静态方法，可以在不用创建对象的情况下，直接拿来使用。静态方法将方法与数据分离，破坏了封装特性，是典型的面向过程风格。<br>先来看一下在开发中常见的定义Constants类的定义方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Constants</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MYSQL_ADDR_KEY = <span class="string">&quot;mysql_addr&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MYSQL_DB_NAME_KEY = <span class="string">&quot;db_name&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MYSQL_USERNAME_KEY = <span class="string">&quot;mysql_username&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MYSQL_PASSWORD_KEY = <span class="string">&quot;mysql_password&quot;</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String REDIS_DEFAULT_ADDR = <span class="string">&quot;192.168.7.2:7234&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> REDIS_DEFAULT_MAX_TOTAL = <span class="number">50</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> REDIS_DEFAULT_MAX_IDLE = <span class="number">50</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> REDIS_DEFAULT_MIN_IDLE = <span class="number">20</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String REDIS_DEFAULT_KEY_PREFIX = <span class="string">&quot;rt:&quot;</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// ...省略更多的常量定义...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样设计的缺点如下：</p>
+<p>首先，这样的设计会影响代码的可维护性。如果参与开发同一个项目的工程师有很多，在开发过程中，可能都要涉及修改这个类，比如往这个类里添加常量，那这个类就会变得越来越大，成百上千行都有可能，查找修改某个常量也会变得比较费时，而且还会增加提交代码冲突的概率。</p>
+<p>其次，这样的设计还会增加代码的编译时间。当 Constants 类中包含很多常量定义的时候，依赖这个类的代码就会很多。那每次修改 Constants 类，都会导致依赖它的类文件重新编译，因此会浪费很多不必要的编译时间。不要小看编译花费的时间，对于一个非常大的工程项目来说，编译一次项目花费的时间可能是几分钟，甚至几十分钟。而我们在开发过程中，每次运行单元测试，都会触发一次编译的过程，这个编译时间就有可能会影响到我们的开发效率。</p>
+<p>最后，这样的设计还会影响代码的复用性。如果我们要在另一个项目中，复用本项目开发的某个类，而这个类又依赖 Constants 类。即便这个类只依赖 Constants 类中的一小部分常量，我们仍然需要把整个 Constants 类也一并引入，也就引入了很多无关的常量到新的项目中。</p>
+<p>那如何改进 Constants 类的设计呢？我这里有两种思路可以借鉴。</p>
+<p>第一种是将 Constants 类拆解为功能更加单一的多个类，比如跟 MySQL 配置相关的常量，我们放到 MysqlConstants 类中；跟 Redis 配置相关的常量，我们放到 RedisConstants 类中。当然，还有一种我个人觉得更好的设计思路，那就是并不单独地设计 Constants 常量类，而是哪个类用到了某个常量，我们就把这个常量定义到这个类中。比如，RedisConfig 类用到了 Redis 配置相关的常量，那我们就直接将这些常量定义在 RedisConfig 中，这样也提高了类设计的内聚性和代码的复用性。</p>
+<p>我们再来讨论一下 Utils 类：</p>
+<p>实际上，Utils 类的出现是基于这样一个问题背景：如果我们有两个类 A 和 B，它们要用到一块相同的功能逻辑，为了避免代码重复，我们不应该在两个类中，将这个相同的功能逻辑，重复地实现两遍。这个时候，我们就可以把这段公用的代码定义为只包含静态方法的 Utils 类了。</p>
+<p>实际上，只包含静态方法不包含任何属性的 Utils 类，是彻彻底底的面向过程的编程风格。但这并不是说，我们就要杜绝使用 Utils 类了。实际上，从刚刚讲的 Utils 类存在的目的来看，它在软件开发中还是挺有用的，能解决代码复用问题。所以，这里并不是说完全不能用 Utils 类，而是说，要尽量避免滥用，不要不加思考地随意去定义 Utils 类。</p>
+<p>类比 Constants 类的设计，我们设计 Utils 类的时候，最好也能细化一下，针对不同的功能，设计不同的 Utils 类，比如 FileUtils、IOUtils、StringUtils、UrlUtils 等，不要设计一个过于大而全的 Utils 类。</p>
+<ul>
+<li><h6 id="3-定义数据和方法分离的类"><a href="#3-定义数据和方法分离的类" class="headerlink" title="3.定义数据和方法分离的类"></a>3.定义数据和方法分离的类</h6></li>
+</ul>
+<p>传统的 MVC 结构分为 Model 层、Controller 层、View 层这三层。不过，在做前后端分离之后，三层结构在后端开发中，会稍微有些调整，被分为 Controller 层、Service 层、Repository 层。Controller 层负责暴露接口给前端调用，Service 层负责核心业务逻辑，Repository 层负责数据读写。而在每一层中，我们又会定义相应的 VO（View Object）、BO（Business Object）、Entity。一般情况下，VO、BO、Entity 中只会定义数据，不会定义方法，所有操作这些数据的业务逻辑都定义在对应的 Controller 类、Service 类、Repository 类中。这就是典型的面向过程的编程风格。</p>
+<p>实际上，这种开发模式叫作基于贫血模型的开发模式，也是我们现在非常常用的一种 Web 项目的开发模式。看到这里，你内心里应该有很多疑惑吧？既然这种开发模式明显违背面向对象的编程风格，为什么大部分 Web 项目都是基于这种开发模式来开发呢？</p>
+<p>1、实现简单。Object仅仅作为传递数据的媒介，不用考虑过多的设计方面，将核心业务逻辑放到service层，用Hibernate之类的框架一套，完美解决任务。<br>2、上手快。使用贫血模式开发的web项目，新来的程序员看看代码就能“照猫画虎”干活了，不需要多高的技术水平。所以很多程序员干了几年，仅仅就会写CURD。<br>3、一些技术鼓励使用贫血模型。例如J2EE Entity Beans，Hibernate等。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java8新特性简明教程</title>
     <url>/2021/03/22/Java8%E6%96%B0%E7%89%B9%E6%80%A7%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="允许在接口中有默认方法实现"><a href="#允许在接口中有默认方法实现" class="headerlink" title="允许在接口中有默认方法实现"></a>允许在接口中有默认方法实现</h2><p>Java 8 允许我们使用default关键字，为接口声明添加非抽象的方法实现。这个特性又被称为扩展方法。下面是我们的第一个例子：<br>  <span id="more"></span></p>
@@ -142,52 +250,6 @@
 ]]></content>
       <tags>
         <tag>Java8</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设计模式之哪些设计看似是面向对象实则是面向过程的</title>
-    <url>/2021/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%93%AA%E4%BA%9B%E8%AE%BE%E8%AE%A1%E7%9C%8B%E4%BC%BC%E6%98%AF%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%AE%9E%E5%88%99%E6%98%AF%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B%E7%9A%84/</url>
-    <content><![CDATA[<blockquote>
-<p>现如今，大部分编程语言都是面向对象编程语言，大部分软件都是基于面向对象编程这种编程范式来开发的。不过，在实际的开发工作中，我们常常对面向对象编程都有误解，总以为把所有代码都塞到类里，自然就是在进行面向对象编程了。实际上，这样的认识是不正确的。有时候，从表面上看似是面向对象编程风格的代码，从本质上看却是面向过程编程风格的。今天，我结合具体的代码实例来讲一讲，有哪些看似是面向对象，实际上是面向过程编程风格的代码。</p>
-</blockquote>
-<ul>
-<li><h6 id="1-滥用getter、setter-方法"><a href="#1-滥用getter、setter-方法" class="headerlink" title="1.滥用getter、setter 方法"></a>1.滥用getter、setter 方法</h6></li>
-</ul>
-<p>在开发中设计一个类时我们通常把getter、setter方法都一并定义，或许有时更加省事直接使用IDE或Lombok插件自动生成所有属性的getter、setter方法。这种做法是非常不推荐的。它违反了面向对象编程的封装特性，相当于将面向对象编程风格退化成了面向过程编程风格。比如下面一个例子：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShoppingCart</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> itemsCount;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">double</span> totalPrice;</span><br><span class="line">  <span class="keyword">private</span> List&lt;ShoppingCartItem&gt; items = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemsCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.itemsCount;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setItemsCount</span><span class="params">(<span class="keyword">int</span> itemsCount)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.itemsCount = itemsCount;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getTotalPrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.totalPrice;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTotalPrice</span><span class="params">(<span class="keyword">double</span> totalPrice)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.totalPrice = totalPrice;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> List&lt;ShoppingCartItem&gt; <span class="title">getItems</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.items;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addItem</span><span class="params">(ShoppingCartItem item)</span> </span>&#123;</span><br><span class="line">    items.add(item);</span><br><span class="line">    itemsCount++;</span><br><span class="line">    totalPrice += item.getPrice();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...省略其他方法...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在这段代码中，ShoppingCart 是一个简化后的购物车类，有三个私有（private）属性：itemsCount、totalPrice、items。对于 itemsCount、totalPrice 两个属性，我们定义了它们的 getter、setter 方法。对于 items 属性，我们定义了它的 getter 方法和 addItem() 方法。<br>我们先来看前两个属性，itemsCount 和 totalPrice。虽然我们将它们定义成 private 私有属性，但是提供了 public 的 getter、setter 方法，这就跟将这两个属性定义为 public 公有属性，没有什么两样了。外部可以通过 setter 方法随意地修改这两个属性的值。除此之外，任何代码都可以随意调用 setter 方法，来重新设置 itemsCount、totalPrice 属性的值，这也会导致其跟 items 属性的值不一致。<br>而面向对象封装的定义是：通过访问权限控制，隐藏内部数据，外部仅能通过类提供的有限的接口访问、修改内部数据。所以，暴露不应该暴露的 setter 方法，明显违反了面向对象的封装特性。数据没有访问权限控制，任何代码都可以随意修改它，代码就退化成了面向过程编程风格的了。<br>看完了前两个属性，我们再来看 items 这个属性。对于 items 这个属性，我们定义了它的 getter 方法和 addItem() 方法，并没有定义它的 setter 方法。这样的设计貌似看起来没有什么问题，但实际上并不是。<br>对于 itemsCount 和 totalPrice 这两个属性来说，定义一个 public 的 getter 方法，确实无伤大雅，毕竟 getter 方法不会修改数据。但是，对于 items 属性就不一样了，这是因为 items 属性的 getter 方法，返回的是一个 List集合容器。外部调用者在拿到这个容器之后，是可以操作容器内部数据的，也就是说，外部代码还是能修改 items 中的数据。比如像下面这样：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ShoppingCart cart = <span class="keyword">new</span> ShoppCart();</span><br><span class="line">...</span><br><span class="line">cart.getItems().clear(); <span class="comment">// 清空购物车</span></span><br></pre></td></tr></table></figure>
-
-<p>你可能会说，清空购物车这样的功能需求看起来合情合理啊，上面的代码没有什么不妥啊。你说得没错，需求是合理的，但是这样的代码写法，会导致 itemsCount、totalPrice、items 三者数据不一致。我们不应该将清空购物车的业务逻辑暴露给上层代码。正确的做法应该是，在 ShoppingCart 类中定义一个 clear() 方法，将清空购物车的业务逻辑封装在里面，透明地给调用者使用。ShoppingCart 类的 clear() 方法的具体代码实现如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShoppingCart</span> </span>&#123;</span><br><span class="line">  <span class="comment">// ...省略其他代码...</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    items.clear();</span><br><span class="line">    itemsCount = <span class="number">0</span>;</span><br><span class="line">    totalPrice = <span class="number">0.0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>所以，在设计实现类的时候，除非真的需要，否则，尽量不要给属性定义 setter 方法。除此之外，尽管 getter 方法相对 setter 方法要安全些，但是如果返回的是集合容器（比如例子中的 List 容器），也要防范集合内部数据被修改的危险。</p>
-<ul>
-<li><h6 id="2-滥用全局变量和方法"><a href="#2-滥用全局变量和方法" class="headerlink" title="2.滥用全局变量和方法"></a>2.滥用全局变量和方法</h6></li>
-</ul>
-<p>在面向对象编程中，常见的全局变量有单例类对象、静态成员变量、常量等，常见的全局方法有静态方法。单例类对象在全局代码中只有一份，所以，它相当于一个全局变量。静态成员变量归属于类上的数据，被所有的实例化对象所共享，也相当于一定程度上的全局变量。而常量是一种非常常见的全局变量，比如一些代码中的配置参数，一般都设置为常量，放到一个 Constants 类中。静态方法一般用来操作静态变量或者外部数据。你可以联想一下我们常用的各种 Utils 类，里面的方法一般都会定义成静态方法，可以在不用创建对象的情况下，直接拿来使用。静态方法将方法与数据分离，破坏了封装特性，是典型的面向过程风格。<br>先来看一下在开发中常见的定义Constants类的定义方法：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Constants</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MYSQL_ADDR_KEY = <span class="string">&quot;mysql_addr&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MYSQL_DB_NAME_KEY = <span class="string">&quot;db_name&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MYSQL_USERNAME_KEY = <span class="string">&quot;mysql_username&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MYSQL_PASSWORD_KEY = <span class="string">&quot;mysql_password&quot;</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String REDIS_DEFAULT_ADDR = <span class="string">&quot;192.168.7.2:7234&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> REDIS_DEFAULT_MAX_TOTAL = <span class="number">50</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> REDIS_DEFAULT_MAX_IDLE = <span class="number">50</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> REDIS_DEFAULT_MIN_IDLE = <span class="number">20</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String REDIS_DEFAULT_KEY_PREFIX = <span class="string">&quot;rt:&quot;</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// ...省略更多的常量定义...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样设计的缺点如下：</p>
-<p>首先，这样的设计会影响代码的可维护性。如果参与开发同一个项目的工程师有很多，在开发过程中，可能都要涉及修改这个类，比如往这个类里添加常量，那这个类就会变得越来越大，成百上千行都有可能，查找修改某个常量也会变得比较费时，而且还会增加提交代码冲突的概率。</p>
-<p>其次，这样的设计还会增加代码的编译时间。当 Constants 类中包含很多常量定义的时候，依赖这个类的代码就会很多。那每次修改 Constants 类，都会导致依赖它的类文件重新编译，因此会浪费很多不必要的编译时间。不要小看编译花费的时间，对于一个非常大的工程项目来说，编译一次项目花费的时间可能是几分钟，甚至几十分钟。而我们在开发过程中，每次运行单元测试，都会触发一次编译的过程，这个编译时间就有可能会影响到我们的开发效率。</p>
-<p>最后，这样的设计还会影响代码的复用性。如果我们要在另一个项目中，复用本项目开发的某个类，而这个类又依赖 Constants 类。即便这个类只依赖 Constants 类中的一小部分常量，我们仍然需要把整个 Constants 类也一并引入，也就引入了很多无关的常量到新的项目中。</p>
-<p>那如何改进 Constants 类的设计呢？我这里有两种思路可以借鉴。</p>
-<p>第一种是将 Constants 类拆解为功能更加单一的多个类，比如跟 MySQL 配置相关的常量，我们放到 MysqlConstants 类中；跟 Redis 配置相关的常量，我们放到 RedisConstants 类中。当然，还有一种我个人觉得更好的设计思路，那就是并不单独地设计 Constants 常量类，而是哪个类用到了某个常量，我们就把这个常量定义到这个类中。比如，RedisConfig 类用到了 Redis 配置相关的常量，那我们就直接将这些常量定义在 RedisConfig 中，这样也提高了类设计的内聚性和代码的复用性。</p>
-<p>我们再来讨论一下 Utils 类：</p>
-<p>实际上，Utils 类的出现是基于这样一个问题背景：如果我们有两个类 A 和 B，它们要用到一块相同的功能逻辑，为了避免代码重复，我们不应该在两个类中，将这个相同的功能逻辑，重复地实现两遍。这个时候，我们就可以把这段公用的代码定义为只包含静态方法的 Utils 类了。</p>
-<p>实际上，只包含静态方法不包含任何属性的 Utils 类，是彻彻底底的面向过程的编程风格。但这并不是说，我们就要杜绝使用 Utils 类了。实际上，从刚刚讲的 Utils 类存在的目的来看，它在软件开发中还是挺有用的，能解决代码复用问题。所以，这里并不是说完全不能用 Utils 类，而是说，要尽量避免滥用，不要不加思考地随意去定义 Utils 类。</p>
-<p>类比 Constants 类的设计，我们设计 Utils 类的时候，最好也能细化一下，针对不同的功能，设计不同的 Utils 类，比如 FileUtils、IOUtils、StringUtils、UrlUtils 等，不要设计一个过于大而全的 Utils 类。</p>
-<ul>
-<li><h6 id="3-定义数据和方法分离的类"><a href="#3-定义数据和方法分离的类" class="headerlink" title="3.定义数据和方法分离的类"></a>3.定义数据和方法分离的类</h6></li>
-</ul>
-<p>传统的 MVC 结构分为 Model 层、Controller 层、View 层这三层。不过，在做前后端分离之后，三层结构在后端开发中，会稍微有些调整，被分为 Controller 层、Service 层、Repository 层。Controller 层负责暴露接口给前端调用，Service 层负责核心业务逻辑，Repository 层负责数据读写。而在每一层中，我们又会定义相应的 VO（View Object）、BO（Business Object）、Entity。一般情况下，VO、BO、Entity 中只会定义数据，不会定义方法，所有操作这些数据的业务逻辑都定义在对应的 Controller 类、Service 类、Repository 类中。这就是典型的面向过程的编程风格。</p>
-<p>实际上，这种开发模式叫作基于贫血模型的开发模式，也是我们现在非常常用的一种 Web 项目的开发模式。看到这里，你内心里应该有很多疑惑吧？既然这种开发模式明显违背面向对象的编程风格，为什么大部分 Web 项目都是基于这种开发模式来开发呢？</p>
-<p>1、实现简单。Object仅仅作为传递数据的媒介，不用考虑过多的设计方面，将核心业务逻辑放到service层，用Hibernate之类的框架一套，完美解决任务。<br>2、上手快。使用贫血模式开发的web项目，新来的程序员看看代码就能“照猫画虎”干活了，不需要多高的技术水平。所以很多程序员干了几年，仅仅就会写CURD。<br>3、一些技术鼓励使用贫血模型。例如J2EE Entity Beans，Hibernate等。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
 </search>
