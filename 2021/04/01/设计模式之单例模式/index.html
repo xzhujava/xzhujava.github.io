@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="小柱同学的个人博客">
+    <meta name="author" content="xzhu‘s blog">
+    
+    <title>
+        
+            设计模式之单例模式 |
+        
+        xzhu‘s blog
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpg","favicon":"/images/favicon.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Talk is cheap，show me the code。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                xzhu‘s blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">设计模式之单例模式</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">xzhu‘s blog</span>
+                        
+                            <span class="author-label">Trainee</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-04-01 11:06:43
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E3%80%81%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">设计模式、单例模式</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>4.1k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>14 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <blockquote>
+<p>经典的设计模式有23种，但是在日常开发中常用的设计模式可能还不到一半，如果随便抓一个程序员让他讲下熟悉的设计模式，那么我猜肯定会包含单例模式。<br>学习单例模式之前有这么几个问题：</p>
+</blockquote>
+<ul>
+<li>为什么要使用单例？</li>
+<li>单例存在哪些问题？</li>
+<li>单例与静态类的区别？</li>
+<li>有何替代的解决方案？<br>下面就通过这篇文章来回答上述几个问题。</li>
+</ul>
+<h5 id="为什么要使用单例？"><a href="#为什么要使用单例？" class="headerlink" title="为什么要使用单例？"></a>为什么要使用单例？</h5><p>单例设计模式（Singleton Design Pattern）理解起来非常简单。一个类只允许创建一个对象（或者实例），那这个类就是一个单例类，这种设计模式就叫作单例设计模式，简称单例模式。那么单例模式有什么好处呢？或者说可以解决哪些问题？</p>
+<h6 id="1-处理资源访问冲突"><a href="#1-处理资源访问冲突" class="headerlink" title="1.处理资源访问冲突"></a>1.处理资源访问冲突</h6><p>你可能会说资源访问冲突那直接在该‘对象’加锁不就行了吗？实际上，解决资源竞争问题的办法有很多，分布式锁是最常听到的一种解决方案。不过，实现一个安全可靠、无 bug、高性能的分布式锁，并不是件容易的事情。除此之外，并发队列（BlockingQueue）也可以解决这个问题：但这种方式实现起来也稍微有点复杂。<br>相对于这两种解决方案，单例模式的解决思路就简单一些了。单例模式相对于之前类级别锁的好处是，使用时不用创建那么多对象，一方面节省内存空间，另一方面节省系统文件句柄（对于操作系统来说，文件句柄也是一种资源，不能随便浪费）。</p>
+<h6 id="2-表示全局唯一类"><a href="#2-表示全局唯一类" class="headerlink" title="2.表示全局唯一类"></a>2.表示全局唯一类</h6><p>从业务概念上，如果有些数据在系统中只应保存一份，那就比较适合设计为单例类。比如，配置信息类。在系统中，我们只有一个配置文件，当配置文件被加载到内存之后，以对象的形式存在，也理所应当只有一份。</p>
+<h5 id="单例的实现方式有哪些？"><a href="#单例的实现方式有哪些？" class="headerlink" title="单例的实现方式有哪些？"></a>单例的实现方式有哪些？</h5><p>要实现一个单例，必须要满足以下几个要素：</p>
+<ul>
+<li>构造函数需要是 private 访问权限的，这样才能避免外部通过 new 创建实例；</li>
+<li>考虑对象创建时的线程安全问题；</li>
+<li>考虑是否支持延迟加载；</li>
+<li>考虑 getInstance() 性能是否高（是否加锁）。</li>
+</ul>
+<p>下面就介绍几种经典的实现方式：</p>
+<h6 id="1-饿汉式"><a href="#1-饿汉式" class="headerlink" title="1.饿汉式"></a>1.饿汉式</h6><p>饿汉式的实现方式比较简单。在类加载的时候，instance 静态实例就已经创建并初始化好了，所以，instance 实例的创建过程是线程安全的。不过，这样的实现方式不支持延迟加载，从名字中我们也可以看出这一点。具体的代码实现如下所例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdGenerator</span> </span>&#123; </span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> IdGenerator instance = <span class="keyword">new</span> IdGenerator();</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">IdGenerator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IdGenerator <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有人觉得这种实现方式不好，因为不支持延迟加载，如果实例占用资源多（比如占用内存多）或初始化耗时长（比如需要加载各种配置文件），提前初始化实例是一种浪费资源的行为。最好的方法应该在用到的时候再去初始化。不过，我个人并不认同这样的观点。<br>如果初始化耗时长，那我们最好不要等到真正要用它的时候，才去执行这个耗时长的初始化过程，这会影响到系统的性能（比如，在响应客户端接口请求的时候，做这个初始化操作，会导致此请求的响应时间变长，甚至超时）。采用饿汉式实现方式，将耗时的初始化操作，提前到程序启动的时候完成，这样就能避免在程序运行的时候，再去初始化导致的性能问题。<br>如果实例占用资源多，按照 fail-fast 的设计原则（有问题及早暴露），那我们也希望在程序启动时就将这个实例初始化好。如果资源不够，就会在程序启动的时候触发报错（比如 Java 中的 PermGen Space OOM），我们可以立即去修复。这样也能避免在程序运行一段时间后，突然因为初始化这个实例占用资源过多，导致系统崩溃，影响系统的可用性</p>
+<h6 id="2-懒汉式"><a href="#2-懒汉式" class="headerlink" title="2.懒汉式"></a>2.懒汉式</h6><p>懒汉式相对于饿汉式的优势是支持延迟加载。具体的代码实现如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdGenerator</span> </span>&#123; </span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> IdGenerator instance;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">IdGenerator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> IdGenerator <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">      instance = <span class="keyword">new</span> IdGenerator();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不过懒汉式的缺点也很明显，我们给 getInstance() 这个方法加了一把大锁（synchronzed），导致这个函数的并发度很低。量化一下的话，并发度是 1，也就相当于串行操作了。而这个函数是在单例使用期间，一直会被调用。如果这个单例类偶尔会被用到，那这种实现方式还可以接受。但是，如果频繁地用到，那频繁加锁、释放锁及并发度低等问题，会导致性能瓶颈，这种实现方式就不可取了</p>
+<h6 id="3-双重检测"><a href="#3-双重检测" class="headerlink" title="3.双重检测"></a>3.双重检测</h6><p>饿汉式不支持延迟加载，懒汉式有性能问题，不支持高并发。那我们再来看一种既支持延迟加载、又支持高并发的单例实现方式，也就是双重检测实现方式。<br>在这种实现方式中，只要 instance 被创建之后，即便再调用 getInstance() 函数也不会再进入到加锁逻辑中了。所以，这种实现方式解决了懒汉式并发度低的问题。具体的代码实现如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdGenerator</span> </span>&#123; </span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> IdGenerator instance;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">IdGenerator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IdGenerator <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">synchronized</span>(IdGenerator.class) &#123; <span class="comment">// 此处为类级别的锁</span></span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">          instance = <span class="keyword">new</span> IdGenerator();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有人说，这种实现方式有些问题。因为指令重排序，可能会导致 IdGenerator 对象被 new 出来，并且赋值给 instance 之后，还没来得及初始化（执行构造函数中的代码逻辑），就被另一个线程使用了。<br>要解决这个问题，我们需要给 instance 成员变量加上 volatile 关键字，禁止指令重排序才行。实际上，只有很低版本的 Java 才会有这个问题。我们现在用的高版本的 Java 已经在 JDK 内部实现中解决了这个问题（解决的方法很简单，只要把对象 new 操作和初始化操作设计为原子操作，就自然能禁止重排序）。</p>
+<h6 id="4-静态内部类"><a href="#4-静态内部类" class="headerlink" title="4.静态内部类"></a>4.静态内部类</h6><p>我们再来看一种比双重检测更加简单的实现方法，那就是利用 Java 的静态内部类。它有点类似饿汉式，但又能做到了延迟加载。具体是怎么做到的呢？我们先来看它的代码实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdGenerator</span> </span>&#123; </span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">IdGenerator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonHolder</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> IdGenerator instance = <span class="keyword">new</span> IdGenerator();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IdGenerator <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> SingletonHolder.instance;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>SingletonHolder 是一个静态内部类，当外部类 IdGenerator 被加载的时候，并不会创建 SingletonHolder 实例对象。只有当调用 getInstance() 方法时，SingletonHolder 才会被加载，这个时候才会创建 instance。instance 的唯一性、创建过程的线程安全性，都由 JVM 来保证。所以，这种实现方法既保证了线程安全，又能做到延迟加载。</p>
+<h6 id="5-枚举"><a href="#5-枚举" class="headerlink" title="5.枚举"></a>5.枚举</h6><p>最后，我们介绍一种最简单的实现方式，基于枚举类型的单例实现。这种实现方式通过 Java 枚举类型本身的特性，保证了实例创建的线程安全性和实例的唯一性。具体的代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">IdGenerator</span> </span>&#123;</span><br><span class="line">  INSTANCE;</span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种实现方式通过 Java 枚举类型本身的特性，保证了实例创建的线程安全性和实例的唯一性。</p>
+<h5 id="单例存在哪些问题？"><a href="#单例存在哪些问题？" class="headerlink" title="单例存在哪些问题？"></a>单例存在哪些问题？</h5><p>大部分情况下，我们在项目中使用单例，都是用它来表示一些全局唯一类，比如配置信息类、连接池类、ID 生成器类。单例模式书写简洁、使用方便，在代码中，我们不需要创建对象，直接通过类似 IdGenerator.getInstance().getId() 这样的方法来调用就可以了。但是，这种使用方法有点类似硬编码（hard code），会带来诸多问题。</p>
+<h6 id="1-单例对-OOP-特性的支持不友好"><a href="#1-单例对-OOP-特性的支持不友好" class="headerlink" title="1.单例对 OOP 特性的支持不友好"></a>1.单例对 OOP 特性的支持不友好</h6><p>我们知道，OOP 的四大特性是封装、抽象、继承、多态。单例这种设计模式对于其中的抽象、继承、多态都支持得不好。为什么这么说呢？我们还是通过 IdGenerator 这个例子来讲解。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Order</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">create</span><span class="params">(...)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">long</span> id = IdGenerator.getInstance().getId();</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">create</span><span class="params">(...)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">long</span> id = IdGenerator.getInstance().getId();</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>IdGenerator 的使用方式违背了基于接口而非实现的设计原则，也就违背了广义上理解的 OOP 的抽象特性。如果未来某一天，我们希望针对不同的业务采用不同的 ID 生成算法。比如，订单 ID 和用户 ID 采用不同的 ID 生成器来生成。为了应对这个需求变化，我们需要修改所有用到 IdGenerator 类的地方，这样代码的改动就会比较大。<br>除此之外，单例对继承、多态特性的支持也不友好。这里我之所以会用“不友好”这个词，而非“完全不支持”，是因为从理论上来讲，单例类也可以被继承、也可以实现多态，只是实现起来会非常奇怪，会导致代码的可读性变差。不明白设计意图的人，看到这样的设计，会觉得莫名其妙。所以，一旦你选择将某个类设计成到单例类，也就意味着放弃了继承和多态这两个强有力的面向对象特性，也就相当于损失了可以应对未来需求变化的扩展性。</p>
+<h6 id="2-单例会隐藏类之间的依赖关系"><a href="#2-单例会隐藏类之间的依赖关系" class="headerlink" title="2.单例会隐藏类之间的依赖关系"></a>2.单例会隐藏类之间的依赖关系</h6><p>我们知道，代码的可读性非常重要。在阅读代码的时候，我们希望一眼就能看出类与类之间的依赖关系，搞清楚这个类依赖了哪些外部类。<br>通过构造函数、参数传递等方式声明的类之间的依赖关系，我们通过查看函数的定义，就能很容易识别出来。但是，单例类不需要显示创建、不需要依赖参数传递，在函数中直接调用就可以了。如果代码比较复杂，这种调用关系就会非常隐蔽。在阅读代码的时候，我们就需要仔细查看每个函数的代码实现，才能知道这个类到底依赖了哪些单例类。</p>
+<h6 id="3-单例对代码的扩展性不友好"><a href="#3-单例对代码的扩展性不友好" class="headerlink" title="3.单例对代码的扩展性不友好"></a>3.单例对代码的扩展性不友好</h6><p>我们知道，单例类只能有一个对象实例。如果未来某一天，我们需要在代码中创建两个实例或多个实例，那就要对代码有比较大的改动。你可能会说，会有这样的需求吗？既然单例类大部分情况下都用来表示全局类，怎么会需要两个或者多个实例呢？<br>实际上，这样的需求并不少见。我们拿数据库连接池来举例解释一下。<br>在系统设计初期，我们觉得系统中只应该有一个数据库连接池，这样能方便我们控制对数据库连接资源的消耗。所以，我们把数据库连接池类设计成了单例类。但之后我们发现，系统中有些 SQL 语句运行得非常慢。这些 SQL 语句在执行的时候，长时间占用数据库连接资源，导致其他 SQL 请求无法响应。为了解决这个问题，我们希望将慢 SQL 与其他 SQL 隔离开来执行。为了实现这样的目的，我们可以在系统中创建两个数据库连接池，慢 SQL 独享一个数据库连接池，其他 SQL 独享另外一个数据库连接池，这样就能避免慢 SQL 影响到其他 SQL 的执行。<br>如果我们将数据库连接池设计成单例类，显然就无法适应这样的需求变更，也就是说，单例类在某些情况下会影响代码的扩展性、灵活性。所以，数据库连接池、线程池这类的资源池，最好还是不要设计成单例类。实际上，一些开源的数据库连接池、线程池也确实没有设计成单例类。</p>
+<h6 id="4-单例对代码的可测试性不友好"><a href="#4-单例对代码的可测试性不友好" class="headerlink" title="4.单例对代码的可测试性不友好"></a>4.单例对代码的可测试性不友好</h6><p>单例模式的使用会影响到代码的可测试性。如果单例类依赖比较重的外部资源，比如 DB，我们在写单元测试的时候，希望能通过 mock 的方式将它替换掉。而单例类这种硬编码式的使用方式，导致无法实现 mock 替换。<br>除此之外，如果单例类持有成员变量（比如 IdGenerator 中的 id 成员变量），那它实际上相当于一种全局变量，被所有的代码共享。如果这个全局变量是一个可变全局变量，也就是说，它的成员变量是可以被修改的，那我们在编写单元测试的时候，还需要注意不同测试用例之间，修改了单例类中的同一个成员变量的值，从而导致测试结果互相影响的问题。</p>
+<h6 id="5-单例不支持有参数的构造函数"><a href="#5-单例不支持有参数的构造函数" class="headerlink" title="5.单例不支持有参数的构造函数"></a>5.单例不支持有参数的构造函数</h6><p>单例不支持有参数的构造函数，比如我们创建一个连接池的单例对象，我们没法通过参数来指定连接池的大小。</p>
+<h5 id="单例与静态类的区别？"><a href="#单例与静态类的区别？" class="headerlink" title="单例与静态类的区别？"></a>单例与静态类的区别？</h5><p>单例和静态类的区别主要有以下几点：</p>
+<ul>
+<li>单例模式会提供给你一个全局唯一的对象，静态类只是提供给你很多静态方法，这些方法不用创建对象，通过类就可以直接调用；</li>
+<li>单例模式的灵活性更高，方法可以被override，因为静态类都是静态方法，所以不能被override；</li>
+<li>如果是一个非常重的对象，单例模式可以懒加载，静态类就无法做到；</li>
+</ul>
+<p>那么时候时候应该用静态类，什么时候应该用单例模式呢？首先如果你只是想使用一些工具方法，那么最好用静态类，静态类比单例类更快，因为静态的绑定是在编译期进行的。如果你要维护状态信息，或者访问资源时，应该选用单例模式。</p>
+<h5 id="单例有什么替代解决方案？"><a href="#单例有什么替代解决方案？" class="headerlink" title="单例有什么替代解决方案？"></a>单例有什么替代解决方案？</h5><p>为了保证全局唯一，除了使用单例，我们还可以用静态方法来实现。不过，静态方法这种实现思路，并不能解决我们之前提到的问题。如果要完全解决这些问题，我们可能要从根上，寻找其他方式来实现全局唯一类了。比如，通过工厂模式、IOC 容器（比如 Spring IOC 容器）来保证。<br>有人把单例当作反模式，主张杜绝在项目中使用。我个人觉得这有点极端。模式没有对错，关键看你怎么用。如果单例类并没有后续扩展的需求，并且不依赖外部系统，那设计成单例类就没有太大问题。对于一些全局的类，我们在其他地方 new 的话，还要在类之间传来传去，不如直接做成单例类，使用起来简洁方便。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：设计模式之单例模式</li>
+        <li>本文作者：xzhu‘s blog</li>
+        <li>创建时间：2021-04-01 11:06:43</li>
+        <li>
+            本文链接：https://xzhujava.github.io/2021/04/01/设计模式之单例模式/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/03/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%87%A0%E7%A7%8D%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">设计模式之几种设计原则</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="twikoo-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/twikoo@1.0.0/dist/twikoo.all.min.js"
+        ></script>
+        <div id="twikoo-comment"></div>
+        <script data-pjax>
+            function loadTwikoo() {
+                twikoo.init({
+                    el: '#twikoo-comment',
+                    envId: 'hello-cloudbase-9gy1pzzq31c72c9a',
+                    region: '',
+                });
+            }
+
+            if ('true') {
+                const loadTwikooTimeout = setTimeout(() => {
+                    loadTwikoo();
+                    clearTimeout(loadTwikooTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadTwikoo);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">xzhu‘s blog</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.1</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%8D%95%E4%BE%8B%EF%BC%9F"><span class="nav-text">为什么要使用单例？</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E5%A4%84%E7%90%86%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%86%B2%E7%AA%81"><span class="nav-text">1.处理资源访问冲突</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-%E8%A1%A8%E7%A4%BA%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%B1%BB"><span class="nav-text">2.表示全局唯一类</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-text">单例的实现方式有哪些？</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E9%A5%BF%E6%B1%89%E5%BC%8F"><span class="nav-text">1.饿汉式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-%E6%87%92%E6%B1%89%E5%BC%8F"><span class="nav-text">2.懒汉式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-%E5%8F%8C%E9%87%8D%E6%A3%80%E6%B5%8B"><span class="nav-text">3.双重检测</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB"><span class="nav-text">4.静态内部类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-%E6%9E%9A%E4%B8%BE"><span class="nav-text">5.枚举</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E5%AD%98%E5%9C%A8%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-text">单例存在哪些问题？</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E5%8D%95%E4%BE%8B%E5%AF%B9-OOP-%E7%89%B9%E6%80%A7%E7%9A%84%E6%94%AF%E6%8C%81%E4%B8%8D%E5%8F%8B%E5%A5%BD"><span class="nav-text">1.单例对 OOP 特性的支持不友好</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-%E5%8D%95%E4%BE%8B%E4%BC%9A%E9%9A%90%E8%97%8F%E7%B1%BB%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB"><span class="nav-text">2.单例会隐藏类之间的依赖关系</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-%E5%8D%95%E4%BE%8B%E5%AF%B9%E4%BB%A3%E7%A0%81%E7%9A%84%E6%89%A9%E5%B1%95%E6%80%A7%E4%B8%8D%E5%8F%8B%E5%A5%BD"><span class="nav-text">3.单例对代码的扩展性不友好</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-%E5%8D%95%E4%BE%8B%E5%AF%B9%E4%BB%A3%E7%A0%81%E7%9A%84%E5%8F%AF%E6%B5%8B%E8%AF%95%E6%80%A7%E4%B8%8D%E5%8F%8B%E5%A5%BD"><span class="nav-text">4.单例对代码的可测试性不友好</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-%E5%8D%95%E4%BE%8B%E4%B8%8D%E6%94%AF%E6%8C%81%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-text">5.单例不支持有参数的构造函数</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E4%B8%8E%E9%9D%99%E6%80%81%E7%B1%BB%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">单例与静态类的区别？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E6%9C%89%E4%BB%80%E4%B9%88%E6%9B%BF%E4%BB%A3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9F"><span class="nav-text">单例有什么替代解决方案？</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
