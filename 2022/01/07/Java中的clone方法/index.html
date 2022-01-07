@@ -9,7 +9,7 @@
     
     <title>
         
-            能被我喜欢的，那还是人吗 |
+            Java中的clone方法 |
         
         xzhu‘s blog
     </title>
@@ -150,7 +150,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">能被我喜欢的，那还是人吗</span>
+            <span class="title-hover-animation">Java中的clone方法</span>
         </div>
 
         
@@ -168,20 +168,31 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-06-16 11:21:54
+        <i class="fas fa-edit"></i>&nbsp;2022-01-07 16:12:48
     </span>
     
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Java/">Java</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>291 字</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>663 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>1 分钟</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>2 分钟</span>
         </span>
     
     
@@ -197,8 +208,17 @@
         
 
         <div class="article-content markdown-body">
-            <p>…<br>…<br>…<br>…<br>夏天总是容易心动的吧，淡色系的世界，充满着干净让人舒适的气息，薄薄的衣衫随风而动，在少年的心里掀起涟漪，三十六度温柔的风带着点燥热，阳光刺眼，树荫煽动，夏夜星空，还有总让人猝不及防的滴答雨声，每一刻都是无尽浪漫，与你相约清晨跑步，呼吸不经意打在对方心里，它在砰砰跳，眉眼弯弯，你嘴角上扬，我控制不住，向你靠近，很热，但我喜欢，因为是你。<br>…<br>…<br>…<br>…<br>后来，夏天总是容易令人遗憾的吧，慵懒系的阳光，弥漫着温暖又不适的气息，好像北方小城从未拥有过晒得发烫的石地板。夏日的黄昏，广场上嘈杂的人声，远处整点报时的钟声穿过此起彼伏的喷泉。远处的办公楼下的台阶上我们似乎还坐在那里，喝着柠檬水，开着玩笑。手机中深藏的联系人总想点开，但我得控制住，要和你越来越远，很痛，但你幸福就好。</p>
-<iframe src="//player.bilibili.com/player.html?aid=930577626&bvid=BV1SK4y1d7Va&cid=338584649&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+            <p>Java提供了一个赋值操作符来复制值，但没有提供操作符来复制对象。对象类具有一个clone方法，该方法可用于复制对象的值而没有任何副作用。赋值运算符具有一个副作用，当将一个引用分配给另一个引用时，则不会创建对象，并且两个引用都指向同一个对象。这意味着，如果我们更改一个对象中的值，则该值也将反映在另一个对象中。clone()方法处理此问题，请参见一下事例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 方法一：赋值运算符参考</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    A a1 = <span class="keyword">new</span> A();</span><br><span class="line">    a1.a = <span class="number">1</span>;</span><br><span class="line">    a1.b = <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//打印a</span></span><br><span class="line">    System.out.println(<span class="string">&quot;a1&quot;</span>+a1);</span><br><span class="line">    <span class="comment">//将a2和a1指向同一个对象</span></span><br><span class="line">    A a2 = a1;</span><br><span class="line">    <span class="comment">//更改a2将同样反应在a1中</span></span><br><span class="line">    a2.a = <span class="number">3</span>;</span><br><span class="line">    System.out.println(<span class="string">&quot;a1&quot;</span>+a1);</span><br><span class="line">    System.out.println(<span class="string">&quot;a2&quot;</span>+a2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>下面我们使用clone方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 方法2：使用clone()，我们可以避免以上问题</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    B b1 = <span class="keyword">new</span> B();</span><br><span class="line">    b1.a = <span class="number">1</span>;</span><br><span class="line">    b1.b = <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//打印b1</span></span><br><span class="line">    System.out.println(<span class="string">&quot;b1&quot;</span>+b1);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//克隆方法克隆对象</span></span><br><span class="line">        B b2 = b1.clone();</span><br><span class="line">        <span class="comment">//b2和b1现在指向不同的对象,修改b2，更改不会反映在b1中</span></span><br><span class="line">        b2.a =<span class="number">3</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;b1&quot;</span>+b1);</span><br><span class="line">        System.out.println(<span class="string">&quot;b2&quot;</span>+b2);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> Integer a;</span><br><span class="line">    <span class="keyword">public</span> Integer b;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;a=&quot;</span> + a +</span><br><span class="line">                <span class="string">&quot;, b=&quot;</span> + b +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> Integer a;</span><br><span class="line">    <span class="keyword">public</span> Integer b;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;a=&quot;</span> + a +</span><br><span class="line">                <span class="string">&quot;, b=&quot;</span> + b +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> B <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        B clone = (B) <span class="keyword">super</span>.clone();</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上结果输出为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a1&#123;a=<span class="number">1</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">a1&#123;a=<span class="number">3</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">a2&#123;a=<span class="number">3</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">b1&#123;a=<span class="number">1</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">b1&#123;a=<span class="number">1</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">b2&#123;a=<span class="number">3</span>, b=<span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要记住的要点我们可以使用赋值运算符以及使用clone()方法来复制对象。<br>赋值运算符具有副作用，因为它仅赋值引用，而基础对象保持不变。<br>在原始实例变量的情况下，clone()方法没有副作用，因为在克隆过程中会创建一个新对象。<br>如果将对象作为实例变量使用，则clone()方法(如果未正确实现)也会产生副作用，因为克隆的对象具有引用的副本。这被称为浅表副本。<br>可以重写clone()方法，以防止可以单独创建实例变量对象的浅表副本，并且可以更新其属性。这被称为深层副本.</p>
 
         </div>
 
@@ -206,11 +226,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：能被我喜欢的，那还是人吗</li>
+        <li>本文标题：Java中的clone方法</li>
         <li>本文作者：xzhu‘s blog</li>
-        <li>创建时间：2021-06-16 11:21:54</li>
+        <li>创建时间：2022-01-07 16:12:48</li>
         <li>
-            本文链接：https://xzhujava.github.io/2021/06/16/能被我喜欢的，那还是人吗/
+            本文链接：https://xzhujava.github.io/2022/01/07/Java中的clone方法/
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -224,29 +244,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2022/01/07/Java%E4%B8%AD%E7%9A%84clone%E6%96%B9%E6%B3%95/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">Java中的clone方法</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2021/06/11/%E9%9A%8F%E6%84%9F/"
+                           href="/2021/06/16/%E8%83%BD%E8%A2%AB%E6%88%91%E5%96%9C%E6%AC%A2%E7%9A%84%EF%BC%8C%E9%82%A3%E8%BF%98%E6%98%AF%E4%BA%BA%E5%90%97/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">随感</span>
+                                <span class="post-nav-title-item">能被我喜欢的，那还是人吗</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
