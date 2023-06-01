@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Java中的clone方法</title>
-    <url>/2022/01/07/Java%E4%B8%AD%E7%9A%84clone%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p>Java提供了一个赋值操作符来复制值，但没有提供操作符来复制对象。对象类具有一个clone方法，该方法可用于复制对象的值而没有任何副作用。赋值运算符具有一个副作用，当将一个引用分配给另一个引用时，则不会创建对象，并且两个引用都指向同一个对象。这意味着，如果我们更改一个对象中的值，则该值也将反映在另一个对象中。clone()方法处理此问题，请参见一下事例：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 方法一：赋值运算符参考</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    A a1 = <span class="keyword">new</span> A();</span><br><span class="line">    a1.a = <span class="number">1</span>;</span><br><span class="line">    a1.b = <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//打印a</span></span><br><span class="line">    System.out.println(<span class="string">&quot;a1&quot;</span>+a1);</span><br><span class="line">    <span class="comment">//将a2和a1指向同一个对象</span></span><br><span class="line">    A a2 = a1;</span><br><span class="line">    <span class="comment">//更改a2将同样反应在a1中</span></span><br><span class="line">    a2.a = <span class="number">3</span>;</span><br><span class="line">    System.out.println(<span class="string">&quot;a1&quot;</span>+a1);</span><br><span class="line">    System.out.println(<span class="string">&quot;a2&quot;</span>+a2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>下面我们使用clone方法：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 方法2：使用clone()，我们可以避免以上问题</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    B b1 = <span class="keyword">new</span> B();</span><br><span class="line">    b1.a = <span class="number">1</span>;</span><br><span class="line">    b1.b = <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//打印b1</span></span><br><span class="line">    System.out.println(<span class="string">&quot;b1&quot;</span>+b1);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//克隆方法克隆对象</span></span><br><span class="line">        B b2 = b1.clone();</span><br><span class="line">        <span class="comment">//b2和b1现在指向不同的对象,修改b2，更改不会反映在b1中</span></span><br><span class="line">        b2.a =<span class="number">3</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;b1&quot;</span>+b1);</span><br><span class="line">        System.out.println(<span class="string">&quot;b2&quot;</span>+b2);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> Integer a;</span><br><span class="line">    <span class="keyword">public</span> Integer b;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;a=&quot;</span> + a +</span><br><span class="line">                <span class="string">&quot;, b=&quot;</span> + b +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> Integer a;</span><br><span class="line">    <span class="keyword">public</span> Integer b;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;a=&quot;</span> + a +</span><br><span class="line">                <span class="string">&quot;, b=&quot;</span> + b +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> B <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        B clone = (B) <span class="keyword">super</span>.clone();</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上结果输出为：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">a1&#123;a=<span class="number">1</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">a1&#123;a=<span class="number">3</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">a2&#123;a=<span class="number">3</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">b1&#123;a=<span class="number">1</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">b1&#123;a=<span class="number">1</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">b2&#123;a=<span class="number">3</span>, b=<span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>要记住的要点我们可以使用赋值运算符以及使用clone()方法来复制对象。<br>赋值运算符具有副作用，因为它仅赋值引用，而基础对象保持不变。<br>在原始实例变量的情况下，clone()方法没有副作用，因为在克隆过程中会创建一个新对象。<br>如果将对象作为实例变量使用，则clone()方法(如果未正确实现)也会产生副作用，因为克隆的对象具有引用的副本。这被称为浅表副本。<br>可以重写clone()方法，以防止可以单独创建实例变量对象的浅表副本，并且可以更新其属性。这被称为深层副本.</p>
-]]></content>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SpringBoot使用AOP实现简单的日志打印</title>
     <url>/2023/06/01/SpringBoot%E4%BD%BF%E7%94%A8AOP%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%97%A5%E5%BF%97%E6%89%93%E5%8D%B0/</url>
     <content><![CDATA[<blockquote>
@@ -83,9 +64,21 @@
       </tags>
   </entry>
   <entry>
-    <title>写给你的话</title>
-    <url>/2023/01/07/%E5%86%99%E7%BB%99%E4%BD%A0%E7%9A%84%E8%AF%9D/</url>
-    <content><![CDATA[<p>…<br>…<br>…<br>To：LLl<br>对你理应有很多话但此时却不知如何起笔，有时就在想人与人相处要像写代码一样简单就好了，我想这些麻烦都是处理事情时候不够真诚或者说不够理智导致的吧？<br>还记得有次打游戏你问过我想要找一个安稳过日子的还是其他，之后跟你的沟通你对于恋爱或者说结婚对象的态度也是让我喜欢你的最大原因，那时我当然是不知道你内心到底如何，是如你回复“老典韦”傻子才相信爱情还是真的希望找一个满意的不屈于父母压力随便的另一半，但现在我依然不确定。这可能也是我不去找你的原因之一<br>说起父母可能我拿你作为他们当时让我相亲的挡箭牌是即将到来最大的麻烦事，不过我想这件事也并不是那么不好处理。你问我还生气不，我有什么好生气呢纠纠缠缠毫无意义像你说的“都是我去找你的”你依然会把错推向其他人。和你相处这么几个月好的地方正如我前面所说你对于恋爱的态度这也是我所追求的，所以很想和你有一个结果，但现在看来到底是不是你心里话也不可知了。你有时说不希望找一个让你做出改变的人这点我倒是不敢苟同 爱情不是1+1=2没有人是天生合适的只有在一起不断磨合相互改变才能更好，就好像前一段时间跟你吵架闹别扭也慢慢让我找寻怎么去和你相处。每次闹别扭好像你都有道理说那么一大堆为了我怎样怎样，可是总没有把重点放到解决问题上来，总能找到一些话来把矛头引到我的问题上来-怪我不相信你，人一直强调某些事情往往很大一部分是为了遮掩，就像你所做一边说不相信你一边做着不可能让我相信的事。但我从来没有对你有过这方面怀疑，还记得我问过你学历，每次有问题的时候你的解释或者说平时在说某些话的时候不足以让我信服我都会以为是文化差异导致做事说话有缺陷，或许正是我太过有把这种想法放到你身上才导致最后你这样欺骗我却毫无准备的原因。<br>对于之前群里的那些人说的话给你看你当时反应那么大我还疑惑我想这时候也终于有了答案。你不是总对他们有抵触吗？网友和现实朋友的区别就在于现实要考虑到朋友关系圈子等等一系列不是所有事情都适合跟身边人说的，他们虽然说话是难听但不是没有道理，他们存在的意义就在于不适合跟身边现实朋友说的话有一个地方倾诉不求出主意只是有一个释放的地方，现实也没有交集不会影响正常生活<br>回过头说说和你相处的这几个月吧，很感谢你这几个月的陪伴给我谈恋爱的错觉，虽然结局不尽人意但过程也很重要。这几个月相处下来我宁愿相信你是个阳光开朗对另一半或者说期待爱情的女孩但你真正内心想法我却不得知。我不知道你上一段恋情经历了什么我说的不是你网恋三年那位，或许是他带给你的伤害又或者是你们在一起的经历让你如此。但我虽然期待爱情却永远不会像你这么处理事情，于情于理对谁都不负责任包括自身。像你所说我们什么关系都没有如果当时你觉得还喜欢前任完全可以跟我说你自己选择就好，但是你却选择一边和好一边还对我保持暧昧，这个是你处理自身感情失败。还记得吵得最凶的那次你把游戏卸了说不玩了我不确定是不是因为你前任说了什么还是真的就因为我俩这件事也没必要追究了，如果是后者，但过后你依然和之前一样，当时我就知道让你做出改变是很难的一件事，如果游戏都控制不住，人性我想更不可能。<br>不知道我现在是该说你前任呢还是说现任，自从那天之后你们发生了啥想必也不用我来说。我不知道你为什么网恋三年不见他，你也不用说不清楚他是好人坏人，如果他是坏人为什么要继续聊呢，至于真正为何想必你心里也很清楚。当时跟你说期待和你见面有个好的结果可能是出于不甘的心理多一点吧，但是这段时间去外面玩、散心、平心静气想想也没必要了，如果真就继续拉扯下去我相信结局比现在更差。所以与其和旧人纠缠不如孑然一身独自向前。<br>人总是在甜蜜的时候互相欣赏在分开的时候把对方的缺点无限放大，以你的性格如果和旁人谈起我想你会毫不犹豫的把过错都推向对方。不清楚你跨年夜跟我说的话是什么意思 但有些事情不是删掉好友删掉联系方式看不见就代表没有过，相反以后遇见的或者相似的某一瞬间都会让死去的记忆重新攻击你。<br>纵你阅人何其多，再无一人恰似我。</p>
+    <title>一些琐碎一点杂谈</title>
+    <url>/2021/04/05/%E4%B8%80%E4%BA%9B%E7%90%90%E7%A2%8E%E4%B8%80%E7%82%B9%E6%9D%82%E8%B0%88/</url>
+    <content><![CDATA[<p>人们熙熙攘攘来来往往，转身侧眸看见擦肩而过的人，我总觉得是你的身影， 后来，我再看不到那些人，也再不会把谁认作你。<br>可是，<br>我总想起你.<br>…<br>…<br>…<br>…<br>越长大就莫名觉得时间过的越快，一想竟毕业有了两三年。这两年经历的事情好像确实也足够来充满两年时光。<br>19年毕业找工作那段时间真够磨人；第一次去上海外滩，还像一土鳖给那女孩打视频一起看东方明珠、浦东新区的繁华及黄浦江的晚风…后来也经历了分手、前公司**导致失业、疫情、重新找工作,以及到现在朝九晚六平平淡淡的生活…<br>偶尔被老友惦记，问起近况如何，总是答曰：在互联网苟且偷生嘛！是吗? 或许吧。工作，不过是拿自己的灵魂去做典当，然后换取一些银两，在用银两消费把自己的灵魂赎回来，日复一日年复一年…这可能就是生活吧<br>两年时间好像也成长了不少，慢慢学会沟通，学会适应这个社会和生活。如果有一天遇到一个特别喜欢的人得少说话，因为那个时候相互对视就好了，慢慢体会爱情的味道、如果遇到一个不喜欢你的人，要温柔节制的说话，因为你要慢慢的把敌意化平慢慢的去了解她为什么不喜欢你…终有一天，你会与自己和解，咽下所有的脾气，磨平一身的棱角，笑着面对曾经的人和事，这就是成长吧<br>人生中有太多的来不及一眨眼就是一天、一回头就是一年、一转身就是一辈子 在恍恍惚惚中苍老了岁月、在忙碌中丢失了爱情、在奔波中丢了梦想、在回忆中竟全是泪水。</p>
+<p>有些路不走 心不甘 走了 满身伤痕 人生就是这样 无论怎样选择都会有遗憾 。<br>2021年已经过了三分之一 以后的日子希望我们一起加油啊</p>
+<p>2021.04.05 夜</p>
+]]></content>
+      <tags>
+        <tag>感慨</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>能被我喜欢的，那还是人吗</title>
+    <url>/2021/06/16/%E8%83%BD%E8%A2%AB%E6%88%91%E5%96%9C%E6%AC%A2%E7%9A%84%EF%BC%8C%E9%82%A3%E8%BF%98%E6%98%AF%E4%BA%BA%E5%90%97/</url>
+    <content><![CDATA[<p>…<br>…<br>…<br>…<br>夏天总是容易心动的吧，淡色系的世界，充满着干净让人舒适的气息，薄薄的衣衫随风而动，在少年的心里掀起涟漪，三十六度温柔的风带着点燥热，阳光刺眼，树荫煽动，夏夜星空，还有总让人猝不及防的滴答雨声，每一刻都是无尽浪漫，与你相约清晨跑步，呼吸不经意打在对方心里，它在砰砰跳，眉眼弯弯，你嘴角上扬，我控制不住，向你靠近，很热，但我喜欢，因为是你。<br>…<br>…<br>…<br>…<br>后来，夏天总是容易令人遗憾的吧，慵懒系的阳光，弥漫着温暖又不适的气息，好像北方小城从未拥有过晒得发烫的石地板。夏日的黄昏，广场上嘈杂的人声，远处整点报时的钟声穿过此起彼伏的喷泉。远处的办公楼下的台阶上我们似乎还坐在那里，喝着柠檬水，开着玩笑。手机中深藏的联系人总想点开，但我得控制住，要和你越来越远，很痛，但你幸福就好。</p>
+<iframe src="//player.bilibili.com/player.html?aid=930577626&bvid=BV1SK4y1d7Va&cid=338584649&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 ]]></content>
   </entry>
   <entry>
@@ -216,24 +209,6 @@
       </tags>
   </entry>
   <entry>
-    <title>一些琐碎一点杂谈</title>
-    <url>/2021/04/05/%E4%B8%80%E4%BA%9B%E7%90%90%E7%A2%8E%E4%B8%80%E7%82%B9%E6%9D%82%E8%B0%88/</url>
-    <content><![CDATA[<p>人们熙熙攘攘来来往往，转身侧眸看见擦肩而过的人，我总觉得是你的身影， 后来，我再看不到那些人，也再不会把谁认作你。<br>可是，<br>我总想起你.<br>…<br>…<br>…<br>…<br>越长大就莫名觉得时间过的越快，一想竟毕业有了两三年。这两年经历的事情好像确实也足够来充满两年时光。<br>19年毕业找工作那段时间真够磨人；第一次去上海外滩，还像一土鳖给那女孩打视频一起看东方明珠、浦东新区的繁华及黄浦江的晚风…后来也经历了分手、前公司**导致失业、疫情、重新找工作,以及到现在朝九晚六平平淡淡的生活…<br>偶尔被老友惦记，问起近况如何，总是答曰：在互联网苟且偷生嘛！是吗? 或许吧。工作，不过是拿自己的灵魂去做典当，然后换取一些银两，在用银两消费把自己的灵魂赎回来，日复一日年复一年…这可能就是生活吧<br>两年时间好像也成长了不少，慢慢学会沟通，学会适应这个社会和生活。如果有一天遇到一个特别喜欢的人得少说话，因为那个时候相互对视就好了，慢慢体会爱情的味道、如果遇到一个不喜欢你的人，要温柔节制的说话，因为你要慢慢的把敌意化平慢慢的去了解她为什么不喜欢你…终有一天，你会与自己和解，咽下所有的脾气，磨平一身的棱角，笑着面对曾经的人和事，这就是成长吧<br>人生中有太多的来不及一眨眼就是一天、一回头就是一年、一转身就是一辈子 在恍恍惚惚中苍老了岁月、在忙碌中丢失了爱情、在奔波中丢了梦想、在回忆中竟全是泪水。</p>
-<p>有些路不走 心不甘 走了 满身伤痕 人生就是这样 无论怎样选择都会有遗憾 。<br>2021年已经过了三分之一 以后的日子希望我们一起加油啊</p>
-<p>2021.04.05 夜</p>
-]]></content>
-      <tags>
-        <tag>感慨</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>能被我喜欢的，那还是人吗</title>
-    <url>/2021/06/16/%E8%83%BD%E8%A2%AB%E6%88%91%E5%96%9C%E6%AC%A2%E7%9A%84%EF%BC%8C%E9%82%A3%E8%BF%98%E6%98%AF%E4%BA%BA%E5%90%97/</url>
-    <content><![CDATA[<p>…<br>…<br>…<br>…<br>夏天总是容易心动的吧，淡色系的世界，充满着干净让人舒适的气息，薄薄的衣衫随风而动，在少年的心里掀起涟漪，三十六度温柔的风带着点燥热，阳光刺眼，树荫煽动，夏夜星空，还有总让人猝不及防的滴答雨声，每一刻都是无尽浪漫，与你相约清晨跑步，呼吸不经意打在对方心里，它在砰砰跳，眉眼弯弯，你嘴角上扬，我控制不住，向你靠近，很热，但我喜欢，因为是你。<br>…<br>…<br>…<br>…<br>后来，夏天总是容易令人遗憾的吧，慵懒系的阳光，弥漫着温暖又不适的气息，好像北方小城从未拥有过晒得发烫的石地板。夏日的黄昏，广场上嘈杂的人声，远处整点报时的钟声穿过此起彼伏的喷泉。远处的办公楼下的台阶上我们似乎还坐在那里，喝着柠檬水，开着玩笑。手机中深藏的联系人总想点开，但我得控制住，要和你越来越远，很痛，但你幸福就好。</p>
-<iframe src="//player.bilibili.com/player.html?aid=930577626&bvid=BV1SK4y1d7Va&cid=338584649&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-]]></content>
-  </entry>
-  <entry>
     <title>设计模式之哪些设计看似是面向对象实则是面向过程的</title>
     <url>/2021/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%93%AA%E4%BA%9B%E8%AE%BE%E8%AE%A1%E7%9C%8B%E4%BC%BC%E6%98%AF%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%AE%9E%E5%88%99%E6%98%AF%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B%E7%9A%84/</url>
     <content><![CDATA[<blockquote>
@@ -277,15 +252,6 @@
 ]]></content>
       <tags>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>随感</title>
-    <url>/2021/06/11/%E9%9A%8F%E6%84%9F/</url>
-    <content><![CDATA[<p>…<br>…<br>…<br>…<br>我们总是容易用一种自虐的方式制造出一种痴情的假象来使得自己站在感情的道德制高点上，获得一种畸形的满足感和安全感。其实无论是雪夜去对方家楼下站会儿或者是冒着大雨给她送杯奶茶什么的，自己回想起来往往觉得如乔峰大战聚贤庄、关羽千里走单骑一样壮怀激烈，而对于对方来说，一杯奶茶就是一杯奶茶，无法承载起你想要在上面寄托的山崩地裂的情怀。少年的时候，总是迫不及待地将自己的满腔爱意表达出来，而结果往往是陷入表演之中而不自知。所以两个人的记忆才会出现偏差，那些你觉得刻骨铭心的过去，对方往往没有同样的感觉，甚至茫然不知。成长的标志就是懂得克制自己。克制自己的情绪，克制自己的表演欲，甚至克制自己的喜欢。少年时候，喜欢一个人恨不能把她变成自己身体的一部分，她刚说冷，我这边心里已经结冰了，她说难过，我立马如丧考妣，比她还难过，唯恐无法将自己的爱意表达出来。而事实上，谁也无法承担起另一个人的价值寄托，只有做一个独立、有价值的人，才能真正学会去爱另一个人。也千万不要尝试改变另一个人，这注定是徒劳的。做自己就好，爱情的真谛在于相互的吸引、志趣相投的同行，而不是追逐和依附以及自我感动。</p>
-]]></content>
-      <tags>
-        <tag>感慨</tag>
       </tags>
   </entry>
   <entry>
@@ -372,6 +338,40 @@
 ]]></content>
       <tags>
         <tag>设计模式、工厂模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>随感</title>
+    <url>/2021/06/11/%E9%9A%8F%E6%84%9F/</url>
+    <content><![CDATA[<p>…<br>…<br>…<br>…<br>我们总是容易用一种自虐的方式制造出一种痴情的假象来使得自己站在感情的道德制高点上，获得一种畸形的满足感和安全感。其实无论是雪夜去对方家楼下站会儿或者是冒着大雨给她送杯奶茶什么的，自己回想起来往往觉得如乔峰大战聚贤庄、关羽千里走单骑一样壮怀激烈，而对于对方来说，一杯奶茶就是一杯奶茶，无法承载起你想要在上面寄托的山崩地裂的情怀。少年的时候，总是迫不及待地将自己的满腔爱意表达出来，而结果往往是陷入表演之中而不自知。所以两个人的记忆才会出现偏差，那些你觉得刻骨铭心的过去，对方往往没有同样的感觉，甚至茫然不知。成长的标志就是懂得克制自己。克制自己的情绪，克制自己的表演欲，甚至克制自己的喜欢。少年时候，喜欢一个人恨不能把她变成自己身体的一部分，她刚说冷，我这边心里已经结冰了，她说难过，我立马如丧考妣，比她还难过，唯恐无法将自己的爱意表达出来。而事实上，谁也无法承担起另一个人的价值寄托，只有做一个独立、有价值的人，才能真正学会去爱另一个人。也千万不要尝试改变另一个人，这注定是徒劳的。做自己就好，爱情的真谛在于相互的吸引、志趣相投的同行，而不是追逐和依附以及自我感动。</p>
+]]></content>
+      <tags>
+        <tag>感慨</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>写给你的话</title>
+    <url>/2023/01/07/%E5%86%99%E7%BB%99%E4%BD%A0%E7%9A%84%E8%AF%9D/</url>
+    <content><![CDATA[<p>…<br>…<br>…<br>To：LLl<br>对你理应有很多话但此时却不知如何起笔，有时就在想人与人相处要像写代码一样简单就好了，我想这些麻烦都是处理事情时候不够真诚或者说不够理智导致的吧？<br>还记得有次打游戏你问过我想要找一个安稳过日子的还是其他，之后跟你的沟通你对于恋爱或者说结婚对象的态度也是让我喜欢你的最大原因，那时我当然是不知道你内心到底如何，是如你回复“老典韦”傻子才相信爱情还是真的希望找一个满意的不屈于父母压力随便的另一半，但现在我依然不确定。这可能也是我不去找你的原因之一<br>说起父母可能我拿你作为他们当时让我相亲的挡箭牌是即将到来最大的麻烦事，不过我想这件事也并不是那么不好处理。你问我还生气不，我有什么好生气呢纠纠缠缠毫无意义像你说的“都是我去找你的”你依然会把错推向其他人。和你相处这么几个月好的地方正如我前面所说你对于恋爱的态度这也是我所追求的，所以很想和你有一个结果，但现在看来到底是不是你心里话也不可知了。你有时说不希望找一个让你做出改变的人这点我倒是不敢苟同 爱情不是1+1=2没有人是天生合适的只有在一起不断磨合相互改变才能更好，就好像前一段时间跟你吵架闹别扭也慢慢让我找寻怎么去和你相处。每次闹别扭好像你都有道理说那么一大堆为了我怎样怎样，可是总没有把重点放到解决问题上来，总能找到一些话来把矛头引到我的问题上来-怪我不相信你，人一直强调某些事情往往很大一部分是为了遮掩，就像你所做一边说不相信你一边做着不可能让我相信的事。但我从来没有对你有过这方面怀疑，还记得我问过你学历，每次有问题的时候你的解释或者说平时在说某些话的时候不足以让我信服我都会以为是文化差异导致做事说话有缺陷，或许正是我太过有把这种想法放到你身上才导致最后你这样欺骗我却毫无准备的原因。<br>对于之前群里的那些人说的话给你看你当时反应那么大我还疑惑我想这时候也终于有了答案。你不是总对他们有抵触吗？网友和现实朋友的区别就在于现实要考虑到朋友关系圈子等等一系列不是所有事情都适合跟身边人说的，他们虽然说话是难听但不是没有道理，他们存在的意义就在于不适合跟身边现实朋友说的话有一个地方倾诉不求出主意只是有一个释放的地方，现实也没有交集不会影响正常生活<br>回过头说说和你相处的这几个月吧，很感谢你这几个月的陪伴给我谈恋爱的错觉，虽然结局不尽人意但过程也很重要。这几个月相处下来我宁愿相信你是个阳光开朗对另一半或者说期待爱情的女孩但你真正内心想法我却不得知。我不知道你上一段恋情经历了什么我说的不是你网恋三年那位，或许是他带给你的伤害又或者是你们在一起的经历让你如此。但我虽然期待爱情却永远不会像你这么处理事情，于情于理对谁都不负责任包括自身。像你所说我们什么关系都没有如果当时你觉得还喜欢前任完全可以跟我说你自己选择就好，但是你却选择一边和好一边还对我保持暧昧，这个是你处理自身感情失败。还记得吵得最凶的那次你把游戏卸了说不玩了我不确定是不是因为你前任说了什么还是真的就因为我俩这件事也没必要追究了，如果是后者，但过后你依然和之前一样，当时我就知道让你做出改变是很难的一件事，如果游戏都控制不住，人性我想更不可能。<br>不知道我现在是该说你前任呢还是说现任，自从那天之后你们发生了啥想必也不用我来说。我不知道你为什么网恋三年不见他，你也不用说不清楚他是好人坏人，如果他是坏人为什么要继续聊呢，至于真正为何想必你心里也很清楚。当时跟你说期待和你见面有个好的结果可能是出于不甘的心理多一点吧，但是这段时间去外面玩、散心、平心静气想想也没必要了，如果真就继续拉扯下去我相信结局比现在更差。所以与其和旧人纠缠不如孑然一身独自向前。<br>人总是在甜蜜的时候互相欣赏在分开的时候把对方的缺点无限放大，以你的性格如果和旁人谈起我想你会毫不犹豫的把过错都推向对方。不清楚你跨年夜跟我说的话是什么意思 但有些事情不是删掉好友删掉联系方式看不见就代表没有过，相反以后遇见的或者相似的某一瞬间都会让死去的记忆重新攻击你。<br>纵你阅人何其多，再无一人恰似我。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Java中的clone方法</title>
+    <url>/2022/01/07/Java%E4%B8%AD%E7%9A%84clone%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>Java提供了一个赋值操作符来复制值，但没有提供操作符来复制对象。对象类具有一个clone方法，该方法可用于复制对象的值而没有任何副作用。赋值运算符具有一个副作用，当将一个引用分配给另一个引用时，则不会创建对象，并且两个引用都指向同一个对象。这意味着，如果我们更改一个对象中的值，则该值也将反映在另一个对象中。clone()方法处理此问题，请参见一下事例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 方法一：赋值运算符参考</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    A a1 = <span class="keyword">new</span> A();</span><br><span class="line">    a1.a = <span class="number">1</span>;</span><br><span class="line">    a1.b = <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//打印a</span></span><br><span class="line">    System.out.println(<span class="string">&quot;a1&quot;</span>+a1);</span><br><span class="line">    <span class="comment">//将a2和a1指向同一个对象</span></span><br><span class="line">    A a2 = a1;</span><br><span class="line">    <span class="comment">//更改a2将同样反应在a1中</span></span><br><span class="line">    a2.a = <span class="number">3</span>;</span><br><span class="line">    System.out.println(<span class="string">&quot;a1&quot;</span>+a1);</span><br><span class="line">    System.out.println(<span class="string">&quot;a2&quot;</span>+a2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>下面我们使用clone方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 方法2：使用clone()，我们可以避免以上问题</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    B b1 = <span class="keyword">new</span> B();</span><br><span class="line">    b1.a = <span class="number">1</span>;</span><br><span class="line">    b1.b = <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//打印b1</span></span><br><span class="line">    System.out.println(<span class="string">&quot;b1&quot;</span>+b1);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//克隆方法克隆对象</span></span><br><span class="line">        B b2 = b1.clone();</span><br><span class="line">        <span class="comment">//b2和b1现在指向不同的对象,修改b2，更改不会反映在b1中</span></span><br><span class="line">        b2.a =<span class="number">3</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;b1&quot;</span>+b1);</span><br><span class="line">        System.out.println(<span class="string">&quot;b2&quot;</span>+b2);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> Integer a;</span><br><span class="line">    <span class="keyword">public</span> Integer b;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;a=&quot;</span> + a +</span><br><span class="line">                <span class="string">&quot;, b=&quot;</span> + b +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> Integer a;</span><br><span class="line">    <span class="keyword">public</span> Integer b;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;a=&quot;</span> + a +</span><br><span class="line">                <span class="string">&quot;, b=&quot;</span> + b +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> B <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        B clone = (B) <span class="keyword">super</span>.clone();</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上结果输出为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">a1&#123;a=<span class="number">1</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">a1&#123;a=<span class="number">3</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">a2&#123;a=<span class="number">3</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">b1&#123;a=<span class="number">1</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">b1&#123;a=<span class="number">1</span>, b=<span class="number">2</span>&#125;</span><br><span class="line">b2&#123;a=<span class="number">3</span>, b=<span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要记住的要点我们可以使用赋值运算符以及使用clone()方法来复制对象。<br>赋值运算符具有副作用，因为它仅赋值引用，而基础对象保持不变。<br>在原始实例变量的情况下，clone()方法没有副作用，因为在克隆过程中会创建一个新对象。<br>如果将对象作为实例变量使用，则clone()方法(如果未正确实现)也会产生副作用，因为克隆的对象具有引用的副本。这被称为浅表副本。<br>可以重写clone()方法，以防止可以单独创建实例变量对象的浅表副本，并且可以更新其属性。这被称为深层副本.</p>
+]]></content>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
